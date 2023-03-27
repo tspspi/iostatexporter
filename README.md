@@ -48,6 +48,19 @@ the [releases](https://github.com/tspspi/iostatexporter/releases):
 pip install iostatexporter-tspspi.tar.gz
 ```
 
+### ```rc.d``` init script
+
+In addition the exporter can be launched on boot and configured from ```/etc/rc.conf```
+using an rc.init script. A simple implementation can be found in the ```rcd/iostatexporter```
+script. This script can be copied to ```/usr/local/etc/rc.d/iostatexporter```. Then one
+can perform basic configuration from ```rc.conf```:
+
+```
+iostatexporter_enable="YES"
+iostatexporter_port="9250"
+iostatexporter_loglevel="error"
+```
+
 ## Usage
 
 ```

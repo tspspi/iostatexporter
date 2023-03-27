@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# PROVIDE: iostatexporter
+# REQUIRE: NETWORKING SERVERS
+
+# Simple Python I/O statistic exporter for Prometheus on FreeBSD
+# 
+# This exporter uses the ```iostat``` command line client
+# utility to gather information about I/O statistics and
+# exports them using HTTP on the configured port
+#
+# RC configuration variables:
+#
+#  iostatexporter_enable:="NO"
+#   When set to yes start service automatically
+#
+#  iostatexporter_loglevel:="error"
+#   Sets loglevel of the exporter
+#
+#  iostatexporter_port:="9250"
+#   Sets the port at which the exporter should listen
+#
+# Copyright 2021, Thomas Spielauer
+
+. /etc/rc.subr
+
+name="iostatexporter"
+rcvar=iostatexporter_enable
+
+load_rc_config $name
+: ${iostatexporter_enable:="NO"}
+: ${iostatexporter_loglevel:="error"}
+: ${iostatexporter_port:="9250"}
+
+command=/usr/local/bin/iostatexporter
+command_args="--loglevel ${iostatexporter_loglevel} --port ${iostatexporter_port}"
+
+load_rc_config $name
+run_rc_command "$1"
+
